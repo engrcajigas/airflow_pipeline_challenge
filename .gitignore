@@ -1,0 +1,13 @@
+# Airflow configuration
+airflow.cfg
+
+
+
+#Airflow sqlite databases
+airflow.db
+
+
+.venv
+venv/
+
+/logs/
