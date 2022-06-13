@@ -11,3 +11,5 @@ airflow.db
 venv/
 
 /logs/
+
+__pycache__/*
