@@ -1,11 +1,11 @@
 # Using Apache Airflow
 
 ## Pre-requisites:<br/>
-- Apache Airflow ([See Installation Guide](https://github.com/apache/airflow#installing-from-pypi))
+You are expected to have these installed on your local to make this work.
 - Python3 
-- Other pre-requisite
+- Apache Airflow ([See Installation Guide](https://github.com/apache/airflow#installing-from-pypi))
 - SQLite (Note: Not recommended to use in production)
-- 
+- Pre-requisites python modules listed on requirements.txt
 
 
 For this project, I worked with the following datasets:
