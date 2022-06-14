@@ -29,6 +29,8 @@ class CalculateOverallRatings(BaseOperator):
 
         sqlite_hook = SqliteHook(sqlite_conn_id=self.sqlite_conn_id)
         
+        # OPTIMIZE THIS: Build index/indexes on this table to optimize data access
+        # and avoid the use of GROUP BY on this query.
         get_average_rating_query=("""
             SELECT asin, AVG(overall) AS [avg_rating] 
                 FROM product_reviews GROUP BY asin;
