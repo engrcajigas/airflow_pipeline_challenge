@@ -26,10 +26,8 @@ class DropCSVDuplicatesOperator(BaseOperator):
     
     def drop_duplicates(self, csv_filename):
         dataframe = panda.read_csv(csv_filename).drop_duplicates(subset=[self.on_column], keep='last')
+        self.log.info("Dropping duplicates on column {} in {}".format(self.on_column, csv_filename))
         dataframe.to_csv('{}/{}_{}_{}.csv'.format('data', self.tag, 'no_duplicates', date.today().strftime("%Y%m%d")), index=False)
-        
-        print('**************************************')
-        print(dataframe.loc[dataframe.duplicated(), :])
         
         generated_csv_file_no_duplicates = "{}/{}_{}_{}.csv".format('data', self.tag, 'no_duplicates',date.today().strftime("%Y%m%d"))
         return generated_csv_file_no_duplicates
