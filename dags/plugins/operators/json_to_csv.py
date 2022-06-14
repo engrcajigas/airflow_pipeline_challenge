@@ -49,7 +49,7 @@ class JsonToCSVOperator(BaseOperator):
         csv_file = filename.split('.')[0].replace(" ", "_")
         dataframe = panda.read_json('data/transformed_{}.json'.format(date.today().strftime("%Y%m%d")))
         my_data = panda.DataFrame(dataframe, columns=self.columns)
-        print("Converting {} to csv".format(csv_file))
+        self.log.info("Converting {} to csv".format(csv_file))
         my_data.to_csv("{}_{}_{}.csv".format(csv_file, self.tag, date.today().strftime("%Y%m%d")), index=False)
     
         generated_csv_file="{}_{}_{}.csv".format(csv_file, self.tag, date.today().strftime("%Y%m%d"))
@@ -61,10 +61,10 @@ class JsonToCSVOperator(BaseOperator):
         try:
             dataframe = panda.read_json(filename, lines=True, compression='gzip')
             my_data = panda.DataFrame(dataframe, columns=self.columns)
-            print("Converting {} to csv".format(filename))
+            self.log.info("Converting {} to csv".format(filename))
             my_data.to_csv("{}_{}_{}.csv".format(csv_file, self.tag, date.today().strftime("%Y%m%d")), index=False)
         except Exception as e:
-            print("Error encountered: {}".format(e)) 
+            self.log.error("Error encountered: {}".format(e)) 
         
         generated_csv_file="{}_{}_{}.csv".format(csv_file, self.tag, date.today().strftime("%Y%m%d"))                       
         return generated_csv_file
@@ -72,7 +72,6 @@ class JsonToCSVOperator(BaseOperator):
                         
     def execute(self, context):
         filename = context['ti'].xcom_pull(key=self.key_name, task_ids=self.key_name_task_ids)
-        print(filename)
         if "meta" in filename:
             self.transform_to_valid_json(filename)
             generated_csv_file=self.json_to_csv(filename)
